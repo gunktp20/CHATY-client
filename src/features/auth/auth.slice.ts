@@ -1,10 +1,25 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { AddUserFunc, IAuthState } from "./types";
+import { jwtDecode } from "jwt-decode";
 
 const token = localStorage.getItem("token");
 
+interface AccessTokenPayload {
+  userId: string;
+  email: string;
+  roles: [];
+  iat: number;
+  exp: number;
+}
+
+const decoded: AccessTokenPayload | undefined = token
+  ? jwtDecode(token)
+  : undefined;
+
 const initialState: IAuthState = {
-  token: token || null,
+  token: token || "",
+  userId: decoded?.userId || "",
+  email: decoded?.email || "",
 };
 
 const addUserToLocalStorage: AddUserFunc = (token) => {

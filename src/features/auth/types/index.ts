@@ -1,5 +1,7 @@
 export interface IAuthState {
-  token: string | null;
+  token: string;
+  userId: string;
+  email: string;
 }
 
 export type AddUserFunc = (token: string) => void;
